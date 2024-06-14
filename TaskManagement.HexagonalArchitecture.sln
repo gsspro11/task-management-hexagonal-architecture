@@ -1,0 +1,101 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33723.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{D9674656-E0D7-420D-B964-F7CBE5CEE561}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{6D13D60C-1849-40EE-BF60-850E9D9AD43A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{98418F51-34E8-4439-9EF6-720E733E562B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskManagement.HexagonalArchitecture.Domain", "Core\Domain\TaskManagement.HexagonalArchitecture.Domain\TaskManagement.HexagonalArchitecture.Domain.csproj", "{B0E31620-8D15-4BD5-BC8D-328619A364AE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskManagement.HexagonalArchitecture.Application", "Core\Application\TaskManagement.HexagonalArchitecture.Application\TaskManagement.HexagonalArchitecture.Application.csproj", "{FB50EF8C-4BFC-45F7-A510-F594DDDC057F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Adapters", "Adapters", "{4641D207-14F1-4AC9-8A50-CF4572E8983B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Driving", "Driving", "{CAFF5ACA-9CFF-44B1-BFE5-410A70A730D8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Driven", "Driven", "{48421F92-7AD6-403F-A659-92FE4C39D2AD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskManagement.HexagonalArchitecture.Database", "Adapters\Driven\TaskManagement.HexagonalArchitecture.Database\TaskManagement.HexagonalArchitecture.Database.csproj", "{57828C9F-8825-4DFE-ABD1-E38217302D69}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B2EDAD1C-EF99-4DE1-B401-B6658A2C6A78}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{77C21927-E5D0-46F7-ADF5-F253223008DA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Adapters", "Adapters", "{2F308AF8-E474-4B42-8BBE-2C37F68421E7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{0CA50319-DE8F-4A17-B964-D756797A0C9F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{E55C8364-940D-4190-9B79-D14F2271ABD8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskManagement.HexagonalArchitecture.Application.Test", "Tests\Core\Application\TaskManagement.HexagonalArchitecture.Application.Test\TaskManagement.HexagonalArchitecture.Application.Test.csproj", "{5B0651B7-82B5-495A-B4A5-F4514B8D4603}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Driven", "Driven", "{093FDEB2-B293-40D3-8445-504070319058}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskManagement.HexagonalArchitecture.Database.Test", "Tests\Adapters\Driven\TaskManagement.HexagonalArchitecture.Database.Test\TaskManagement.HexagonalArchitecture.Database.Test.csproj", "{CBAD07FF-C745-4422-8736-DA16EA9998C4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apis", "Apis", "{DBB53A40-A53A-43BD-B81E-07A6AB8B1DE1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskManagement.HexagonalArchitecture.Api", "Adapters\Driving\Apis\TaskManagement.HexagonalArchitecture.Api\TaskManagement.HexagonalArchitecture.Api.csproj", "{64FE58DD-1E6F-4F85-AB62-063D1789FFC1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B0E31620-8D15-4BD5-BC8D-328619A364AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0E31620-8D15-4BD5-BC8D-328619A364AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0E31620-8D15-4BD5-BC8D-328619A364AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0E31620-8D15-4BD5-BC8D-328619A364AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB50EF8C-4BFC-45F7-A510-F594DDDC057F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB50EF8C-4BFC-45F7-A510-F594DDDC057F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB50EF8C-4BFC-45F7-A510-F594DDDC057F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB50EF8C-4BFC-45F7-A510-F594DDDC057F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57828C9F-8825-4DFE-ABD1-E38217302D69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57828C9F-8825-4DFE-ABD1-E38217302D69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57828C9F-8825-4DFE-ABD1-E38217302D69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57828C9F-8825-4DFE-ABD1-E38217302D69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B0651B7-82B5-495A-B4A5-F4514B8D4603}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B0651B7-82B5-495A-B4A5-F4514B8D4603}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B0651B7-82B5-495A-B4A5-F4514B8D4603}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B0651B7-82B5-495A-B4A5-F4514B8D4603}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBAD07FF-C745-4422-8736-DA16EA9998C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBAD07FF-C745-4422-8736-DA16EA9998C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBAD07FF-C745-4422-8736-DA16EA9998C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBAD07FF-C745-4422-8736-DA16EA9998C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64FE58DD-1E6F-4F85-AB62-063D1789FFC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64FE58DD-1E6F-4F85-AB62-063D1789FFC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64FE58DD-1E6F-4F85-AB62-063D1789FFC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64FE58DD-1E6F-4F85-AB62-063D1789FFC1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6D13D60C-1849-40EE-BF60-850E9D9AD43A} = {D9674656-E0D7-420D-B964-F7CBE5CEE561}
+		{98418F51-34E8-4439-9EF6-720E733E562B} = {D9674656-E0D7-420D-B964-F7CBE5CEE561}
+		{B0E31620-8D15-4BD5-BC8D-328619A364AE} = {98418F51-34E8-4439-9EF6-720E733E562B}
+		{FB50EF8C-4BFC-45F7-A510-F594DDDC057F} = {6D13D60C-1849-40EE-BF60-850E9D9AD43A}
+		{CAFF5ACA-9CFF-44B1-BFE5-410A70A730D8} = {4641D207-14F1-4AC9-8A50-CF4572E8983B}
+		{48421F92-7AD6-403F-A659-92FE4C39D2AD} = {4641D207-14F1-4AC9-8A50-CF4572E8983B}
+		{57828C9F-8825-4DFE-ABD1-E38217302D69} = {48421F92-7AD6-403F-A659-92FE4C39D2AD}
+		{2F308AF8-E474-4B42-8BBE-2C37F68421E7} = {77C21927-E5D0-46F7-ADF5-F253223008DA}
+		{0CA50319-DE8F-4A17-B964-D756797A0C9F} = {77C21927-E5D0-46F7-ADF5-F253223008DA}
+		{E55C8364-940D-4190-9B79-D14F2271ABD8} = {0CA50319-DE8F-4A17-B964-D756797A0C9F}
+		{5B0651B7-82B5-495A-B4A5-F4514B8D4603} = {E55C8364-940D-4190-9B79-D14F2271ABD8}
+		{093FDEB2-B293-40D3-8445-504070319058} = {2F308AF8-E474-4B42-8BBE-2C37F68421E7}
+		{CBAD07FF-C745-4422-8736-DA16EA9998C4} = {093FDEB2-B293-40D3-8445-504070319058}
+		{DBB53A40-A53A-43BD-B81E-07A6AB8B1DE1} = {CAFF5ACA-9CFF-44B1-BFE5-410A70A730D8}
+		{64FE58DD-1E6F-4F85-AB62-063D1789FFC1} = {DBB53A40-A53A-43BD-B81E-07A6AB8B1DE1}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C2EAE5E3-E648-4C57-A8D6-1E89AAA1B0B6}
+	EndGlobalSection
+EndGlobal
