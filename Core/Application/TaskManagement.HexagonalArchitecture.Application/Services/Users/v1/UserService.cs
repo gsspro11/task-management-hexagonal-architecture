@@ -12,14 +12,19 @@ namespace TaskManagement.HexagonalArchitecture.Application.Services.Users.v1
         {
             var user = await _userManager.FindByEmailAsync(email);
 
+            if (user is null)
+                return CustomResult<User>.Failure(new CustomError("UserNotFound", "User not found."));
+
             return CustomResult<User>.Success(user);
         }
         public async Task<CustomResult<User>> UpdateAsync(string email, string firstName, string lastName, string newEmail)
         {
-            var user = await _userManager.FindByEmailAsync(email);
+            var resultGet = await GetAsync(email);
 
-            if(user is null)
-                return CustomResult<User>.Failure(new CustomError("UserNotFound", "User not found."));
+            if (resultGet.IsFailure)
+                return resultGet;
+
+            var user = resultGet.Value;
 
             user.Update(firstName, lastName, newEmail);
 
