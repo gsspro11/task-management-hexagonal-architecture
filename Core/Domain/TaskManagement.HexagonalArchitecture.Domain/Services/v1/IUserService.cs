@@ -5,6 +5,8 @@ namespace TaskManagement.HexagonalArchitecture.Domain.Services.v1
 {
     public interface IUserService
     {
-        Task<CustomResult<User>> Register(string firstName, string lastName, string email, string password);
+        Task<CustomResult<User>> GetAsync(string email);
+        Task<CustomResult<User>> UpdateAsync(string email, string firstName, string lastName, string newEmail);
+        Task<CustomResult<User>> CreateAsync(string firstName, string lastName, string email, string password);
     }
 }

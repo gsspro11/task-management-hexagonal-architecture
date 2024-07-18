@@ -4,6 +4,7 @@ using TaskManagement.HexagonalArchitecture.Application;
 using TaskManagement.HexagonalArchitecture.Domain.Entities.v1;
 using Microsoft.AspNetCore.Mvc;
 using TaskManagement.HexagonalArchitecture.Api.Commom.ExtensionMethods.v1;
+using TaskManagement.HexagonalArchitecture.Api.Commom.Handlers.v1;
 
 namespace TaskManagement.HexagonalArchitecture.Api
 {
@@ -18,6 +19,9 @@ namespace TaskManagement.HexagonalArchitecture.Api
             builder.Services.AddValidation();
             builder.Services.AddSwaggerDocumentation();
             builder.Services.AddApplicationModule();
+
+            builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+            builder.Services.AddProblemDetails();
 
             builder.Services.AddApiVersioning(config =>
             {
@@ -50,6 +54,8 @@ namespace TaskManagement.HexagonalArchitecture.Api
             app.UseAuthorization();
 
             app.MapControllers();
+
+            app.UseExceptionHandler();
 
             app.Run();
         }

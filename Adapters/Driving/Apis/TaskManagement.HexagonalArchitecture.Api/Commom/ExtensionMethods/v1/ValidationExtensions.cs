@@ -4,6 +4,7 @@ using TaskManagement.HexagonalArchitecture.Api.Controllers.Users;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using TaskManagement.HexagonalArchitecture.Domain.Abstractions;
+using System.Text.Json.Serialization;
 
 namespace TaskManagement.HexagonalArchitecture.Api.Commom.ExtensionMethods.v1
 {
@@ -12,6 +13,10 @@ namespace TaskManagement.HexagonalArchitecture.Api.Commom.ExtensionMethods.v1
         public static void AddValidation(this IServiceCollection services)
         {
             services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+                })
                 .ConfigureApiBehaviorOptions(options =>
                 {
                     options.InvalidModelStateResponseFactory = context =>

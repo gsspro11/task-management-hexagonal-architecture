@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TaskManagement.HexagonalArchitecture.Application.Commom.Notifications.v1;
+using TaskManagement.HexagonalArchitecture.Domain.Abstractions;
+using TaskManagement.HexagonalArchitecture.Domain.Entities.v1;
 using TaskManagement.HexagonalArchitecture.Domain.Services.v1;
 
 namespace TaskManagement.HexagonalArchitecture.Api.Controllers.Users
@@ -15,27 +17,51 @@ namespace TaskManagement.HexagonalArchitecture.Api.Controllers.Users
     [Produces("application/json")]
     [Route("api/v{version:apiVersion}/user")]
     [ProducesResponseType(StatusCodes.Status501NotImplemented)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(IEnumerable<Notification>), StatusCodes.Status422UnprocessableEntity)]
-    public class UserController : ControllerBase
+    [ProducesResponseType(typeof(IEnumerable<CustomError>), StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(typeof(IEnumerable<CustomError>), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(IEnumerable<CustomError>), StatusCodes.Status422UnprocessableEntity)]
+    public class UserController(IUserService _userService) : ControllerBase
     {
-        private readonly IUserService _userService;
-
-        public UserController(IUserService userService)
+        [HttpGet]
+        public async Task<ActionResult> GetAsync([FromQuery] string email)
         {
-            _userService = userService;
+            var result = await _userService.GetAsync(email);
+
+            if (result.IsFailure)
+                return BadRequest(result.Errors);
+
+            return Ok(new
+            {
+                result.Value.Id,
+                result.Value.FirstName,
+                result.Value.LastName,
+                result.Value.Email,
+                result.Value.UserName,
+                result.Value.CreatedDate,
+                result.Value.UpdatedDate
+            });
         }
 
         [HttpPost]
-        public async Task<ActionResult> Register([FromBody] UserRequest request)
+        public async Task<ActionResult> CreateAsync([FromBody] UserRequest request)
         {
-            var result = await _userService.Register(request.FirstName, request.LastName, request.Email, request.Password);
+            var result = await _userService.CreateAsync(request.FirstName, request.LastName, request.Email, request.Password);
 
             if (result.IsFailure)
                 return BadRequest(result.Errors);
 
             return Created("api/v1/user", result.Value.Id);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> UpdateAsync(string email, [FromBody] UserRequest request)
+        {
+            var result = await _userService.UpdateAsync(email, request.FirstName, request.LastName, request.Email);
+
+            if (result.IsFailure)
+                return BadRequest(result.Errors);
+
+            return Ok(result.Value.Id);
         }
     }
 }
