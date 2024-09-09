@@ -28,7 +28,7 @@ namespace TaskManagement.HexagonalArchitecture.Api.Controllers.Users
             var result = await _userService.GetAsync(email);
 
             if (result.IsFailure)
-                return BadRequest(result.Errors);
+                return BadRequest(result.Error);
 
             return Ok(new
             {

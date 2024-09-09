@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VersionSuffix>$(VersionSuffix)</VersionSuffix>
+    <Version>8.1.1</Version>
+    <Version Condition="'$(VersionSuffix)' != ''">$(Version)-$(VersionSuffix)</Version>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Title>Poc.Kafka</Title>
+    <Authors>Guilherme Santos da Silva</Authors>
+    <Company>POC SA</Company>
+    <Description>Biblioteca de integração com Kafka para .NET Core do Poc</Description>
+    <Copyright>Copyright © POC SA 2023</Copyright>
+    <PackageProjectUrl>https://nexus-prd.poc.com.br/</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>mensageria;kafka;pubsub</PackageTags>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Serializers\**" />
+    <EmbeddedResource Remove="Serializers\**" />
+    <None Remove="Serializers\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Confluent.Kafka" Version="2.3.0" />
+    <PackageReference Include="Confluent.SchemaRegistry.Serdes.Avro" Version="2.3.0" />
+    <PackageReference Include="Confluent.SchemaRegistry.Serdes.Json" Version="2.3.0" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="8.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
+  </ItemGroup>
+</Project>

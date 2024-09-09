@@ -1,0 +1,27 @@
+apiVersion: backstage.io/v1alpha1
+#não alterar o kind
+kind: Component
+metadata:
+  name: Poc.RabbitMQ
+  title: Poc.RabbitMQ
+  description: Pacote responsável pela manipulação de mensagens no RabbitMQ do Poc.
+  tags:
+    - backend
+    - net
+    - c#
+    - messaging
+    - rabbitmq
+  links:
+    - url: https://nexus-prd.poc.com.br/#browse/browse:nuget-releases:Poc.RabbitMQ
+      title: Nexus
+      icon: dashboard
+      type: admin-dashboard
+  annotations:
+    backstage.io/techdocs-ref: dir:.
+spec:
+  #não alterar type e owner
+  type: library
+  owner: componentes
+  system: Componente para integração com nosso sistema de mensagens RabbitMQ.
+  summary: Componente para integração com nosso sistema de mensagens RabbitMQ.
+  lifecycle: production
