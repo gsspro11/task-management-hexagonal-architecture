@@ -1,0 +1,13 @@
+pool:
+    name: poc-eks-prd
+
+resources:
+  repositories: 
+      - repository: template
+        type: git
+        name: asre/asre-manifests-templates
+        ref: main
+
+extends:
+    template: pipeline/azure-pipelines.yaml@template
+

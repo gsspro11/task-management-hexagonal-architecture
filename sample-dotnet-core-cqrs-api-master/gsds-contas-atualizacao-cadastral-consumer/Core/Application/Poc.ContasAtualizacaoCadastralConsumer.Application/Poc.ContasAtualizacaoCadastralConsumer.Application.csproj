@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>annotations</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+	  <ProjectReference Include="..\..\..\Adapters\Driven\Integrations\Apis\Poc.ContasAtualizacaoCadastralConsumer.Gsds\Poc.ContasAtualizacaoCadastralConsumer.Gsds.csproj" />
+	  <ProjectReference Include="..\..\..\Adapters\Driven\Integrations\Apis\Poc.ContasAtualizacaoCadastralConsumer.Imp001\Poc.ContasAtualizacaoCadastralConsumer.Imp001.csproj" />
+    <ProjectReference Include="..\..\Domain\Poc.ContasAtualizacaoCadastralConsumer.Domain\Poc.ContasAtualizacaoCadastralConsumer.Domain.csproj" />
+  </ItemGroup>
+</Project>

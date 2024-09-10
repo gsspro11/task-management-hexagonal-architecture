@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>annotations</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Services\v1\Models\**" />
+    <EmbeddedResource Remove="Services\v1\Models\**" />
+    <None Remove="Services\v1\Models\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Poc.Project.Utils" Version="8.3.0" />
+    <PackageReference Include="System.ServiceModel.Primitives" Version="8.0.0" />
+    <PackageReference Include="Poc.Connection.Manager" Version="8.0.0" />
+  </ItemGroup>
+</Project>

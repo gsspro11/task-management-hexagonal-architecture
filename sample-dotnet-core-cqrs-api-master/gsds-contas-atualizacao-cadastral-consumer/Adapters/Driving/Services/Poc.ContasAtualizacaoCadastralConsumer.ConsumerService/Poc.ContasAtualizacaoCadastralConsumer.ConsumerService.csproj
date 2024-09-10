@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<InvariantGlobalization>false</InvariantGlobalization>
+		<UserSecretsId>dotnet-Poc.ContasAtualizacaoCadastralConsumer.ConsumerService-42918609-6bd2-4e8f-b6cd-5cca6cc34614</UserSecretsId>
+		<NoWarn>$(NoWarn);1591</NoWarn>
+	</PropertyGroup>
+	<PropertyGroup>
+		<Title>Gsds Contas Atualizacao Cadastral Consumer</Title>
+		<Company>Poc</Company>
+		<Copyright>Copyright © Poc 2023</Copyright>
+		<Description>Conta Bancaria - Gestao Conta Bancaria</Description>
+		<RepositoryType>git</RepositoryType>
+		<AssemblyName>gsds-contas-atualizacao-cadastral-consumer</AssemblyName>
+		<AssemblyVersion>1.0.0.2</AssemblyVersion>
+		<FileVersion>1.0.0.2</FileVersion>
+		<Product>Conta Bancaria - Gestao Conta Bancaria</Product>
+	</PropertyGroup>
+	<ItemGroup>
+		<Content Include="..\..\appsettings.Development.json" Link="appsettings.Development.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Properties\launchSettings.json" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Poc.Api.Client" Version="8.0.2" />
+		<PackageReference Include="Poc.Auth" Version="8.0.3" />
+		<PackageReference Include="Poc.Cache.Manager" Version="8.1.0" />
+		<PackageReference Include="Poc.Kafka" Version="8.0.0" />
+		<PackageReference Include="Poc.Logging.Internal" Version="8.0.0" />
+		<PackageReference Include="Poc.Parameter.Manager" Version="8.1.1" />
+		<PackageReference Include="Poc.Project.Utils" Version="8.3.0" />
+		<PackageReference Include="Poc.Connection.Manager" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.0-preview.2.24128.5" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\..\Core\Application\Poc.ContasAtualizacaoCadastralConsumer.Application\Poc.ContasAtualizacaoCadastralConsumer.Application.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<Content Update="appsettings.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+</Project>
