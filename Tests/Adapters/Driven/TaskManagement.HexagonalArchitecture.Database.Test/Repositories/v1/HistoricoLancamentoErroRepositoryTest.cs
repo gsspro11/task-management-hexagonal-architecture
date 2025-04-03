@@ -14,7 +14,7 @@ namespace TaskManagement.HexagonalArchitecture.Database.Test.Repositories.v1
         //    _serviceProviderMock = new Mock<IServiceProvider>();
         //    _historicoLancamentoErroRepositoryMock = new Mock<IHistoricoLancamentoErroRepository>();
 
-        //    CommomSetup();
+        //    CommonSetup();
         //}
 
         //[Fact]
@@ -25,7 +25,7 @@ namespace TaskManagement.HexagonalArchitecture.Database.Test.Repositories.v1
         //    _historicoLancamentoErroRepositoryMock.Verify(x => x.InsertAsync(It.IsAny<HistoricoLancamentoErro>()), Times.Once);
         //}
 
-        //private void CommomSetup()
+        //private void CommonSetup()
         //{
         //    _historicoLancamentoErroRepositoryMock.Setup(data => data.InsertAsync(It.IsAny<HistoricoLancamentoErro>()))
         //        .ReturnsAsync(It.IsAny<long>());

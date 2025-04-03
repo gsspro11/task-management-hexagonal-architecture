@@ -21,7 +21,7 @@ namespace TaskManagement.HexagonalArchitecture.Api.Migrations
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "UpdatedDate",
-                table: "Assingments",
+                table: "Assignments",
                 type: "datetime2",
                 nullable: true,
                 oldClrType: typeof(DateTime),
@@ -53,7 +53,7 @@ namespace TaskManagement.HexagonalArchitecture.Api.Migrations
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "UpdatedDate",
-                table: "Assingments",
+                table: "Assignments",
                 type: "datetime2",
                 nullable: false,
                 defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),

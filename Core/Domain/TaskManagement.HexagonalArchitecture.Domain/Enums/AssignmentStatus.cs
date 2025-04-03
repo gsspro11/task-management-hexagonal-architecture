@@ -4,13 +4,13 @@ namespace TaskManagement.HexagonalArchitecture.Domain.Enums
 {
     public enum AssignmentStatus
     {
-        [Description("AGUARDANDO")]
+        [Description("NEW")]
+        N = 'N',
+        [Description("ACTIVE")]
         A = 'A',
-        [Description("PAGO")]
-        P = 'P',
-        [Description("AGUARDANDO REMOVIDO")]
-        O = 'O',
-        [Description("REMOVIDO")]
-        E = 'R'
+        [Description("RESOLVED")]
+        R = 'R',
+        [Description("CLOSED")]
+        C = 'C'
     }
 }

@@ -174,7 +174,7 @@ namespace TaskManagement.HexagonalArchitecture.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Assingments");
+                    b.ToTable("Assignments");
                 });
 
             modelBuilder.Entity("TaskManagement.HexagonalArchitecture.Domain.Entities.v1.Comment", b =>

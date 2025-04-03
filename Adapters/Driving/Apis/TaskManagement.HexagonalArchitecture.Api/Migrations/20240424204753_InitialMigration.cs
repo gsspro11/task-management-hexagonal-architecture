@@ -54,7 +54,7 @@ namespace TaskManagement.HexagonalArchitecture.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Assingments",
+                name: "Assignments",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -68,7 +68,7 @@ namespace TaskManagement.HexagonalArchitecture.Api.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Assingments", x => x.Id);
+                    table.PrimaryKey("PK_Assignments", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -194,9 +194,9 @@ namespace TaskManagement.HexagonalArchitecture.Api.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AssignmentUser_Assingments_TasksId",
+                        name: "FK_AssignmentUser_Assignments_TasksId",
                         column: x => x.TasksId,
-                        principalTable: "Assingments",
+                        principalTable: "Assignments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -222,9 +222,9 @@ namespace TaskManagement.HexagonalArchitecture.Api.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Comments_Assingments_AssignmentId",
+                        name: "FK_Comments_Assignments_AssignmentId",
                         column: x => x.AssignmentId,
-                        principalTable: "Assingments",
+                        principalTable: "Assignments",
                         principalColumn: "Id");
                 });
 
@@ -314,7 +314,7 @@ namespace TaskManagement.HexagonalArchitecture.Api.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Assingments");
+                name: "Assignments");
         }
     }
 }

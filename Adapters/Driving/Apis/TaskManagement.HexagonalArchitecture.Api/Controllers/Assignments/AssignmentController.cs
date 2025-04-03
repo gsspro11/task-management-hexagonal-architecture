@@ -2,7 +2,7 @@
 using TaskManagement.HexagonalArchitecture.Domain.Abstractions;
 using TaskManagement.HexagonalArchitecture.Domain.Services.v1;
 
-namespace TaskManagement.HexagonalArchitecture.Api.Controllers.Users
+namespace TaskManagement.HexagonalArchitecture.Api.Controllers.Assignments
 {
     /// <summary>
     /// Users Management
@@ -13,17 +13,17 @@ namespace TaskManagement.HexagonalArchitecture.Api.Controllers.Users
     [ApiController]
     [ApiVersion("1")]
     [Produces("application/json")]
-    [Route("api/v{version:apiVersion}/user")]
+    [Route("api/v{version:apiVersion}/assignment")]
     [ProducesResponseType(StatusCodes.Status501NotImplemented)]
     [ProducesResponseType(typeof(IEnumerable<CustomError>), StatusCodes.Status500InternalServerError)]
     [ProducesResponseType(typeof(IEnumerable<CustomError>), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(IEnumerable<CustomError>), StatusCodes.Status422UnprocessableEntity)]
-    public class UserController(IUserService userService) : ControllerBase
+    public class AssignmentController(IAssignmentService assignmentService) : ControllerBase
     {
         [HttpGet]
         public async Task<ActionResult> GetAsync([FromQuery] string email)
         {
-            var result = await userService.GetAsync(email);
+            var result = await assignmentService.GetAsync(email);
 
             if (result.IsFailure)
                 return BadRequest(result.Error);
@@ -31,30 +31,31 @@ namespace TaskManagement.HexagonalArchitecture.Api.Controllers.Users
             return Ok(new
             {
                 result.Value.Id,
-                result.Value.FirstName,
-                result.Value.LastName,
-                result.Value.Email,
-                result.Value.UserName,
+                result.Value.Title,
+                result.Value.Description,
+                result.Value.DueDate,
+                result.Value.Priority,
+                result.Value.Status,
                 result.Value.CreatedDate,
                 result.Value.UpdatedDate
             });
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateAsync([FromBody] UserRequest request)
+        public async Task<ActionResult> CreateAsync([FromBody] AssignmentRequest request)
         {
-            var result = await userService.CreateAsync(request.FirstName, request.LastName, request.Email, request.Password);
+            var result = await assignmentService.CreateAsync(request.Title, request.Description, request.DueDate, request.Priority, request.Status);
 
             if (result.IsFailure)
                 return BadRequest(result.Errors);
 
-            return Created("api/v1/user", result.Value.Id);
+            return Created("api/v1/assignment", result.Value.Id);
         }
 
         [HttpPut]
-        public async Task<ActionResult> UpdateAsync(string email, [FromBody] UserRequest request)
+        public async Task<ActionResult> UpdateAsync(string email, [FromBody] AssignmentRequest request)
         {
-            var result = await userService.UpdateAsync(email, request.FirstName, request.LastName, request.Email);
+            var result = await assignmentService.UpdateAsync(request.Title, request.Description, request.DueDate, request.Priority, request.Status);
 
             if (result.IsFailure)
                 return BadRequest(result.Errors);

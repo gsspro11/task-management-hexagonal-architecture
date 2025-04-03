@@ -7,7 +7,7 @@ namespace TaskManagement.HexagonalArchitecture.Api.Data
     internal class ApplicationDbContext : IdentityDbContext<User, Role, Guid>
     {
         public DbSet<Comment> Comments { get; set; }
-        public DbSet<Assignment> Assingments { get; set; }
+        public DbSet<Assignment> Assignments { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {

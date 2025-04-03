@@ -13,7 +13,7 @@ namespace TaskManagement.HexagonalArchitecture.Application.Test.Services.v1
         //{
         //    _unitOfWorkMock = new Mock<IUnitOfWork>();
 
-        //    CommomSetup();
+        //    CommonSetup();
         //}
 
         //[Fact]
@@ -52,7 +52,7 @@ namespace TaskManagement.HexagonalArchitecture.Application.Test.Services.v1
         //    }
         //}
 
-        //private void CommomSetup()
+        //private void CommonSetup()
         //{
         //    var fixture = new Fixture();
         //    fixture.Customizations.Add(new DateOnlySpecimenBuilder());

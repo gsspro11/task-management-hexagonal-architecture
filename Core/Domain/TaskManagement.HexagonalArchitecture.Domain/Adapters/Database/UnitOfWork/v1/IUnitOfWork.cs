@@ -7,6 +7,6 @@ namespace TaskManagement.HexagonalArchitecture.Domain.Adapters.Database.UnitOfWo
         /// <summary>
         /// TBL_WTH
         /// </summary>
-        IHistoricoLancamentoErroRepository HistoricosLancamentosErros { get; }
+        IAssignmentRepository Assignments { get; }
     }
 }

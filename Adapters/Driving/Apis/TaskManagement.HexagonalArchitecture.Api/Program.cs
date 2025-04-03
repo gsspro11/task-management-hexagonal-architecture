@@ -3,8 +3,8 @@ using TaskManagement.HexagonalArchitecture.Api.Data;
 using TaskManagement.HexagonalArchitecture.Application;
 using TaskManagement.HexagonalArchitecture.Domain.Entities.v1;
 using Microsoft.AspNetCore.Mvc;
-using TaskManagement.HexagonalArchitecture.Api.Commom.ExtensionMethods.v1;
-using TaskManagement.HexagonalArchitecture.Api.Commom.Handlers.v1;
+using TaskManagement.HexagonalArchitecture.Api.Common.ExtensionMethods.v1;
+using TaskManagement.HexagonalArchitecture.Api.Common.Handlers.v1;
 
 namespace TaskManagement.HexagonalArchitecture.Api
 {

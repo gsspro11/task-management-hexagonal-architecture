@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TaskManagement.HexagonalArchitecture.Domain.Entities.v1
 {
-    public class User : IdentityUser<Guid>
+    public sealed class User : IdentityUser<Guid>
     {
         public User()
         {

@@ -1,6 +1,7 @@
 ﻿using TaskManagement.HexagonalArchitecture.Domain.Services.v1;
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
+using TaskManagement.HexagonalArchitecture.Application.Services.Assignments.v1;
 using TaskManagement.HexagonalArchitecture.Application.Services.Users.v1;
 
 namespace TaskManagement.HexagonalArchitecture.Application
@@ -11,6 +12,7 @@ namespace TaskManagement.HexagonalArchitecture.Application
         public static void AddApplicationModule(this IServiceCollection services)
         {
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAssignmentService, AssignmentService>();
         }
     }
 }

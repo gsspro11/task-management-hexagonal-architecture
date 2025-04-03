@@ -1,4 +1,4 @@
-namespace TaskManagement.HexagonalArchitecture.Application.Commom.Exceptions.v1
+namespace TaskManagement.HexagonalArchitecture.Application.Common.Exceptions.v1
 {
     public sealed class TaskManagementDomainException : TaskManagementCustomException
     {
