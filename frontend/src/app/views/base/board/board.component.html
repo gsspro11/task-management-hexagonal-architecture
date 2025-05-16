@@ -1,0 +1,278 @@
+<c-row ngPreserveWhitespaces>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header>
+        <div>
+          <div class="title">
+            <strong>User</strong> <small>Tasks</small>
+          </div>
+          <div class="button">
+            <button color="primary" cButton class="shadow" (click)="onCreate()">+</button>
+          </div>
+        </div>
+      </c-card-header>
+      <c-card-body>
+        <c-row>
+          <c-col lg="4">
+            <div class="card m-1">
+              <div class="m-3 mb-0">
+                <strong>To Do</strong>
+              </div>
+              @for (item of toDo; track item; let i = $index) {
+              <c-card color="primary" textColor="white" class="m-3">
+                <c-card-header>Header</c-card-header>
+                <c-card-body class="bg-gradient">
+                  <h5 cCardTitle>{{ item.title }}</h5>
+                  <p cCardText>
+                    {{ item.description }}
+                  </p>
+                  <button color="light" cButton class="shadow" (click)="onViewTask(item.id!)">View</button>
+                  <button color="light" cButton class="shadow" (click)="onViewComments(item.id!)">Comments</button>
+                </c-card-body>
+              </c-card>
+              }
+            </div>
+          </c-col>
+          <c-col lg="4">
+            <div class="card m-1">
+              <div class="m-3 mb-0">
+                <strong>In Progress</strong>
+              </div>
+              @for (item of inProgress; track item; let i = $index) {
+              <c-card color="light" textColor="dark" class="m-3">
+                <c-card-header>Header</c-card-header>
+                <c-card-body class="bg-gradient">
+                  <h5 cCardTitle>{{ item.title }}</h5>
+                  <p cCardText>
+                    {{ item.description }}
+                  </p>
+                  <button color="light" cButton class="shadow" (click)="onViewTask(item.id!)">View</button>
+                  <button color="light" cButton class="shadow" (click)="onViewComments(item.id!)">Comments</button>
+                </c-card-body>
+              </c-card>
+              }
+            </div>
+          </c-col>
+          <c-col lg="4">
+            <div class="card m-1">
+              <div class="m-3 mb-0">
+                <strong>Done</strong>
+              </div>
+              @for (item of done; track item; let i = $index) {
+              <c-card color="success" textColor="white" class="m-3">
+                <c-card-header>Header</c-card-header>
+                <c-card-body class="bg-gradient">
+                  <h5 cCardTitle>{{ item.title }}</h5>
+                  <p cCardText>
+                    {{ item.description }}
+                  </p>
+                  <button color="light" cButton class="shadow" (click)="onViewTask(item.id!)">View</button>
+                  <button color="light" cButton class="shadow" (click)="onViewComments(item.id!)">Comments</button>
+                </c-card-body>
+              </c-card>
+              }
+            </div>
+          </c-col>
+        </c-row>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>
+
+<c-modal #modalTask alignment="center" id="modalTask" [(visible)]="isModalTaskVisible" (close)="onCloseModalTask()"
+  size="lg" scrollable>
+  <div style="overflow-y: auto;">
+    <form #customStylesForm="ngForm" (ngSubmit)="onSubmitTask()" [formGroup]="simpleFormTask" [gutter]="3" novalidate
+      cForm>
+      <c-modal-header>
+        <h5 cModalTitle class="text-black">User Task</h5>
+        <button [cModalToggle]="modalTask.id" cButtonClose (click)="onCloseModalTask()"></button>
+      </c-modal-header>
+      <c-modal-body class="text-black">
+        <div class="mb-3">
+          <label cLabel for="title" class="form-label"><strong>Title</strong></label>
+          <c-input-group class="mb-3" *ngIf="simpleFormTask.controls['title'] as ctrl">
+            <input [valid]="
+                    ctrl.valid
+                      ? true
+                      : submitted && ctrl.invalid
+                      ? false
+                      : undefined
+                  " autocomplete="off" cFormControl formControlName="title" id="title" class="form-control"
+              placeholder="Title" required />
+            <c-form-feedback *ngIf="submitted || ctrl.invalid" [valid]="!(submitted || ctrl.invalid)">
+              <ng-container *ngIf="ctrl.errors as errors">
+                <div *ngIf="errors['required']">{{ formErrors['title'].required }}</div>
+              </ng-container>
+            </c-form-feedback>
+          </c-input-group>
+        </div>
+        <div class="mb-3">
+          <label cLabel for="title" class="form-label"><strong>User</strong></label>
+          <c-input-group class="mb-3" *ngIf="simpleFormTask.controls['email'] as ctrl">
+            <input [valid]="
+                    ctrl.valid
+                      ? true
+                      : submitted && ctrl.invalid
+                      ? false
+                      : undefined
+                  " autocomplete="off" cFormControl formControlName="email" id="email" class="form-control"
+              placeholder="User" required />
+            <c-form-feedback *ngIf="submitted || ctrl.invalid" [valid]="!(submitted || ctrl.invalid)">
+              <ng-container *ngIf="ctrl.errors as errors">
+                <div *ngIf="errors['required']">{{ formErrors['email'].required }}</div>
+              </ng-container>
+            </c-form-feedback>
+          </c-input-group>
+        </div>
+        <div class="mb-3">
+          <label cLabel for="description" class="form-label"><strong>Description</strong></label>
+          <c-input-group class="mb-3" *ngIf="simpleFormTask.controls['description'] as ctrl">
+            <textarea [valid]="
+                    ctrl.valid
+                      ? true
+                      : submitted && ctrl.invalid
+                      ? false
+                      : undefined
+                  " autocomplete="off" cFormControl formControlName="description" id="description" class="form-control"
+              placeholder="Description" rows="3" required></textarea>
+            <c-form-feedback *ngIf="submitted || ctrl.invalid" [valid]="!(submitted || ctrl.invalid)">
+              <ng-container *ngIf="ctrl.errors as errors">
+                <div *ngIf="errors['required']">{{ formErrors['description'].required }}</div>
+              </ng-container>
+            </c-form-feedback>
+          </c-input-group>
+        </div>
+        <div class="mb-3">
+          <label cLabel for="dueDate" class="form-label"><strong>Due Date</strong></label>
+          <c-input-group class="mb-3" *ngIf="simpleFormTask.controls['dueDate'] as ctrl">
+            <input [valid]="
+                    ctrl.valid
+                      ? true
+                      : submitted && ctrl.invalid
+                      ? false
+                      : undefined
+                  " autocomplete="off" cFormControl formControlName="dueDate" id="dueDate" class="form-control"
+              placeholder="Due Date" mask='00/00/0000' type="text" required />
+            <c-form-feedback *ngIf="submitted || ctrl.invalid" [valid]="!(submitted || ctrl.invalid)">
+              <ng-container *ngIf="ctrl.errors as errors">
+                <div *ngIf="errors['required']">{{ formErrors['dueDate'].required }}</div>
+              </ng-container>
+            </c-form-feedback>
+          </c-input-group>
+        </div>
+        <div class="mb-3">
+          <label cLabel for="priority" class="form-label"><strong>Priority</strong></label>
+          <c-input-group class="mb-3" *ngIf="simpleFormTask.controls['priority'] as ctrl">
+            <select [valid]="
+                    ctrl.valid
+                      ? true
+                      : submitted && ctrl.invalid
+                      ? false
+                      : undefined
+                  " cSelect formControlName="priority" id="priority" class="form-select" required>
+              <option value="" selected>Select Priority</option>
+              <option value="3">Low</option>
+              <option value="2">Medium</option>
+              <option value="1">High</option>
+            </select>
+            <c-form-feedback *ngIf="submitted || ctrl.invalid" [valid]="!(submitted || ctrl.invalid)">
+              <ng-container *ngIf="ctrl.errors as errors">
+                <div *ngIf="errors['required']">{{ formErrors['priority'].required }}</div>
+              </ng-container>
+            </c-form-feedback>
+          </c-input-group>
+        </div>
+        <div class="mb-3">
+          <label cLabel for="status" class="form-label"><strong>Status</strong></label>
+          <c-input-group class="mb-3" *ngIf="simpleFormTask.controls['status'] as ctrl">
+            <select [valid]="
+                    ctrl.valid
+                      ? true
+                      : submitted && ctrl.invalid
+                      ? false
+                      : undefined
+                  " cSelect formControlName="status" id="status" class="form-select" required>
+              <option value="" selected>Select Status</option>
+              <option value="0">To Do</option>
+              <option value="1">In Progress</option>
+              <option value="2">Done</option>
+            </select>
+            <c-form-feedback *ngIf="submitted || ctrl.invalid" [valid]="!(submitted || ctrl.invalid)">
+              <ng-container *ngIf="ctrl.errors as errors">
+                <div *ngIf="errors['required']">{{ formErrors['status'].required }}</div>
+              </ng-container>
+            </c-form-feedback>
+          </c-input-group>
+        </div>
+      </c-modal-body>
+      <c-modal-footer>
+        <button cButton type="submit" color="primary">Save</button>
+        <button cButton [cModalToggle]="modalTask.id" color="secondary" (click)="onCloseModalTask()">Close</button>
+      </c-modal-footer>
+    </form>
+  </div>
+</c-modal>
+
+<c-modal #modalComments alignment="center" id="modalComments" [(visible)]="isModalCommentsVisible"
+  (close)="onCloseModalComments()" size="lg" scrollable>
+  <div style="overflow-y: auto;">
+    <form #customStylesForm="ngForm" (ngSubmit)="onSubmitComment()" [formGroup]="simpleFormComment" [gutter]="3" novalidate
+      cForm>
+      <c-modal-header>
+        <h5 cModalTitle class="text-black">Discussion</h5>
+        <button [cModalToggle]="modalComments.id" cButtonClose (click)="onCloseModalComments()"></button>
+      </c-modal-header>
+      <c-modal-body class="text-black">
+        @for (item of comments; track item; let i = $index) {
+        <c-card class="mb-3">
+          <c-card-body>
+            <blockquote class="blockquote mb-0">
+              <p>
+                {{ item.description }}
+              </p>
+              <footer class="blockquote-footer">
+                <cite title="Source Title">{{ item.userName }}</cite>
+              </footer>
+            </blockquote>
+          </c-card-body>
+        </c-card>
+        }
+        <div class="mb-3">
+          <c-input-group class="mb-3" *ngIf="simpleFormComment.controls['description'] as ctrl">
+            <textarea [valid]="
+                    ctrl.valid
+                      ? true
+                      : submitted && ctrl.invalid
+                      ? false
+                      : undefined
+                  " autocomplete="off" cFormControl formControlName="description" id="description" class="form-control"
+              placeholder="Add a comment." rows="3" required></textarea>
+            <c-form-feedback *ngIf="submitted || ctrl.invalid" [valid]="!(submitted || ctrl.invalid)">
+              <ng-container *ngIf="ctrl.errors as errors">
+                <div *ngIf="errors['required']">{{ formErrors['description'].required }}</div>
+              </ng-container>
+            </c-form-feedback>
+          </c-input-group>
+        </div>
+      </c-modal-body>
+      <c-modal-footer>
+        <button cButton type="submit" color="primary">Save</button>
+        <button cButton [cModalToggle]="modalComments.id" color="secondary"
+          (click)="onCloseModalComments()">Close</button>
+      </c-modal-footer>
+    </form>
+  </div>
+</c-modal>
+
+<c-toaster [placement]="position" class="p-3" position="fixed">
+  <c-toast color="success" (timer)="onTimerChange($event)" (visibleChange)="onVisibleChange($event)"
+    [visible]="visible()">
+    <c-toast-header>
+      Success!
+    </c-toast-header>
+    <c-toast-body>
+      <span class="text-white">{{ messageSuccess }}</span>
+    </c-toast-body>
+  </c-toast>
+</c-toaster>
