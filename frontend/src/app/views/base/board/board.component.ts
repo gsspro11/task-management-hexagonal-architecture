@@ -27,6 +27,7 @@ import {
   ToasterComponent,
   ToastHeaderComponent,
 } from '@coreui/angular';
+import { IconDirective } from '@coreui/icons-angular';
 import { AssignmentService } from '../../../core/services/assignment.service';
 import { TokenService } from '../../../core/services/token.service';
 import { TokenModel } from '../../../auth/models/token.model';
@@ -43,58 +44,9 @@ import { NgxMaskDirective } from 'ngx-mask';
 import { format } from 'date-fns';
 import { ValidationFormsService } from '../../pages/validation-forms.service';
 import { CommentService } from '../../../core/services/comment.service';
-
-type AssignmentModel = {
-  id: string | null | undefined;
-  title: string;
-  userName: string;
-  description: string;
-  dueDate: Date;
-  priority: number;
-  status: number;
-};
-
-type CommentModel = {
-  id: string | null | undefined;
-  assignmentId: string | null | undefined;
-  description: string;
-  userId: string;
-};
-
-function expDateValidators(c: FormControl) {
-  if (!c.value) {
-    return {
-      validateInput: {
-        valid: false,
-      },
-    };
-  }
-
-  const value = c.value.replace(/\//gi, '');
-
-  if (value.length === 8) {
-    const day = parseInt(value.substring(0, 2), 10);
-    const month = parseInt(value.substring(2, 4), 10);
-    const year = parseInt(value.substring(4, 8), 10);
-
-    // Create a date object
-    const date = new Date(year, month - 1, day);
-
-    // Validate the date
-    if (
-      date.getFullYear() === year &&
-      date.getMonth() === month - 1 &&
-      date.getDate() === day
-    ) {
-      return null; // Valid date
-    }
-  }
-  return {
-    validateInput: {
-      valid: false,
-    },
-  };
-}
+import { UserService } from '../../../core/services/user.service';
+import { AssignmentModel } from '../../../core/models/assignment-model';
+import { CommentModel } from '../../../core/models/comment-model';
 
 @Component({
   selector: 'app-board',
@@ -131,12 +83,16 @@ function expDateValidators(c: FormControl) {
     ToastHeaderComponent,
     ToastBodyComponent,
     FormSelectDirective,
-  ],
+    IconDirective
+  ]
 })
 export class BoardComponent implements OnInit {
   formErrors: any;
   submitted = false;
+  idAssignmentDelete: string | null | undefined = null;
+
   isModalTaskVisible = false;
+  isModalConfirmVisible = false;
   isModalCommentsVisible = false;
 
   simpleFormTask!: FormGroup;
@@ -148,15 +104,18 @@ export class BoardComponent implements OnInit {
   assignments: AssignmentModel[] = [];
   modalAssignment: AssignmentModel | null = null;
 
+  done: AssignmentModel[] = [];
   toDo: AssignmentModel[] = [];
   inProgress: AssignmentModel[] = [];
-  done: AssignmentModel[] = [];
+
+  userNameFilteredOptions: string[] = [];
 
   messageError = '';
   messageSuccess = '';
 
   constructor(
     private formBuilder: FormBuilder,
+    private userService: UserService,
     private tokenService: TokenService,
     private commentService: CommentService,
     private assignmentService: AssignmentService,
@@ -165,6 +124,10 @@ export class BoardComponent implements OnInit {
     this.decodedToken = this.tokenService.get;
   }
 
+  position = 'top-end';
+  visible = signal(false);
+  percentage = signal(0);
+
   ngOnInit(): void {
     this.formErrors = this.validationFormsService.errorMessages;
     this.createForm();
@@ -172,20 +135,30 @@ export class BoardComponent implements OnInit {
     this.getAssignments();
   }
 
-  private getAssignments() {
-    this.assignmentService.get(this.decodedToken?.id!).subscribe((res) => {
-      this.assignments = res;
-
-      this.toDo = res.filter(
-        (assignment: { status: number }) => assignment.status === 0
-      );
-      this.inProgress = res.filter(
-        (assignment: { status: number }) => assignment.status === 1
-      );
-      this.done = res.filter(
-        (assignment: { status: number }) => assignment.status === 2
-      );
+  createForm() {
+    this.simpleFormTask = this.formBuilder.group({
+      title: ['', [Validators.required]],
+      email: ['', [Validators.required]],
+      description: ['', [Validators.required]],
+      dueDate: ['', [expDateValidators]],
+      priority: ['', [Validators.required]],
+      status: ['', [Validators.required]],
     });
+
+    this.simpleFormComment = this.formBuilder.group({
+      description: ['', [Validators.required]],
+    });
+  }
+
+  //Tasks
+
+  onCreateTask() {
+    this.messageError = '';
+    this.submitted = false;
+    this.isModalTaskVisible = true;
+    this.modalAssignment = null;
+
+    this.simpleFormTask.reset();
   }
 
   onSubmitTask() {
@@ -217,49 +190,6 @@ export class BoardComponent implements OnInit {
     }
   }
 
-  onSubmitComment() {
-    if (this.onValidateComment()) {
-      let comment: CommentModel = {
-        id: null,
-        userId: this.decodedToken?.id!,
-        assignmentId: this.modalAssignment?.id,
-        description: this.simpleFormComment.get('description')?.value,
-      };
-
-      // if (this.modalAssignment) {
-      //   this.editComment(comment);
-      // } else {
-      this.registerComment(comment);
-      //}
-    }
-  }
-
-  onCloseModalTask() {
-    this.messageError = '';
-    this.submitted = false;
-    this.isModalTaskVisible = false;
-
-    this.simpleFormTask.reset();
-  }
-
-  onCloseModalComments() {
-    this.messageError = '';
-    this.submitted = false;
-    this.modalAssignment = null;
-    this.isModalCommentsVisible = false;
-
-    this.simpleFormComment.reset();
-  }
-
-  onUpdateComments() {
-    this.messageError = '';
-    this.submitted = false;
-
-    this.onViewComments(this.modalAssignment?.id!);
-
-    this.simpleFormComment.reset();
-  }
-
   onValidateTask() {
     this.messageError = '';
     this.messageSuccess = '';
@@ -269,22 +199,30 @@ export class BoardComponent implements OnInit {
     return this.simpleFormTask.status === 'VALID';
   }
 
-  onValidateComment() {
-    this.messageError = '';
-    this.messageSuccess = '';
-    this.submitted = true;
-
-    // stop here if form is invalid
-    return this.simpleFormComment.status === 'VALID';
-  }
-
-  onCreate() {
+  onCloseModalTask() {
     this.messageError = '';
     this.submitted = false;
-    this.isModalTaskVisible = true;
-    this.modalAssignment = null;
+    this.isModalTaskVisible = false;
+    this.userNameFilteredOptions = [];
 
     this.simpleFormTask.reset();
+  }
+
+  onConfirmDeleteTask() {
+    if (this.idAssignmentDelete) {
+      this.assignmentService.delete(this.idAssignmentDelete!).subscribe({
+        next: () => {
+          this.messageSuccess = 'Assignment deleted successfully.';
+          this.onCloseModalConfirm();
+          this.toggleToast();
+          this.getAssignments();
+        },
+        error: (e) => {
+          this.messageSuccess = '';
+          this.messageError = e.message;
+        },
+      });
+    }
   }
 
   onViewTask(id: string) {
@@ -310,60 +248,110 @@ export class BoardComponent implements OnInit {
     this.simpleFormTask.updateValueAndValidity();
   }
 
+  onDeleteTask(id: string) {
+    this.idAssignmentDelete = id;
+
+    this.isModalConfirmVisible = true;
+  }
+
+  //
+
+
+  //Comments
+
+  onSubmitComment() {
+    if (this.onValidateComment()) {
+      let comment: CommentModel = {
+        id: null,
+        userId: this.decodedToken?.id!,
+        assignmentId: this.modalAssignment?.id,
+        description: this.simpleFormComment.get('description')?.value,
+      };
+
+      // if (this.modalAssignment) {
+      //   this.editComment(comment);
+      // } else {
+      this.registerComment(comment);
+      //}
+    }
+  }
+
+  onUpdateComments() {
+    this.messageError = '';
+    this.submitted = false;
+
+    this.onViewComments(this.modalAssignment?.id!);
+
+    this.simpleFormComment.reset();
+  }
+
+  onValidateComment() {
+    this.messageError = '';
+    this.messageSuccess = '';
+    this.submitted = true;
+
+    // stop here if form is invalid
+    return this.simpleFormComment.status === 'VALID';
+  }
+
+  onCloseModalComments() {
+    this.messageError = '';
+    this.submitted = false;
+    this.modalAssignment = null;
+    this.isModalCommentsVisible = false;
+
+    this.simpleFormComment.reset();
+  }
+
   onViewComments(id: string) {
     this.modalAssignment =
       this.assignments.find(
         (assignment: { id: string | null | undefined }) => assignment.id === id
       ) || null;
 
-    this.commentService.get(id).subscribe(
-      (res) => {
+    this.commentService.get(id).subscribe({
+      next: (res) => {
         this.comments = res;
       },
-      (e) => {
+      error: () => {
         this.comments = [];
-      }
-    );
+      },
+    });
 
-    // if (!this.modalAssignment) return;
-
-    // const dueDate: Date = new Date(this.modalAssignment?.dueDate!);
-    // const formattedDate: string = format(dueDate, 'dd/MM/yyyy');
-
-    // this.simpleFormTask.patchValue({
-    //   title: this.modalAssignment?.title,
-    //   email: this.decodedToken?.email,
-    //   description: this.modalAssignment?.description,
-    //   dueDate: formattedDate,
-    //   priority: this.modalAssignment?.priority,
-    //   status: this.modalAssignment?.status,
-    // });
     this.isModalCommentsVisible = true;
-
-    //this.simpleFormTask.updateValueAndValidity();
   }
 
-  createForm() {
-    this.simpleFormTask = this.formBuilder.group({
-      title: ['', [Validators.required]],
-      email: ['', [Validators.required]],
-      description: ['', [Validators.required]],
-      dueDate: ['', [expDateValidators]],
-      priority: ['', [Validators.required]],
-      status: ['', [Validators.required]],
-    });
-
-    this.simpleFormComment = this.formBuilder.group({
-      description: ['', [Validators.required]],
-    });
-  }
-
-  position = 'top-end';
-  visible = signal(false);
-  percentage = signal(0);
+  //
 
   toggleToast() {
     this.visible.update((value) => !value);
+  }
+
+  onInputChange() {
+    const inputValue = this.simpleFormTask.get('email')?.value;
+    if (inputValue.length >= 1) {
+      this.userService.getByUserName(inputValue).subscribe((res) => {
+        this.userNameFilteredOptions = res;
+      });
+    } else {
+      this.userNameFilteredOptions = [];
+    }
+  }
+
+  onCloseModalConfirm() {
+    this.messageError = '';
+    this.submitted = false;
+    this.idAssignmentDelete = null;
+    this.isModalConfirmVisible = false;
+  }
+
+  selectOption(option: string) {
+    this.simpleFormTask.get('email')?.setValue(option);
+    this.userNameFilteredOptions = [];
+  }
+
+  onTimerChange($event: number) {
+    this.percentage.set($event * 25);
   }
 
   onVisibleChange($event: boolean) {
@@ -371,9 +359,39 @@ export class BoardComponent implements OnInit {
     this.percentage.set(this.visible() ? this.percentage() : 0);
   }
 
-  onTimerChange($event: number) {
-    this.percentage.set($event * 25);
+
+  private getAssignments() {
+    this.assignmentService.get(this.decodedToken?.id!).subscribe((res) => {
+      this.assignments = res;
+
+      this.assignments.forEach((element) => {
+        switch (element.priority) {
+          case 1:
+            element.priorityDescription = 'High';
+            break;
+          case 2:
+            element.priorityDescription = 'Medium';
+            break;
+          case 3:
+            element.priorityDescription = 'Low';
+            break;
+        };
+
+        element.truncatedDescription = truncateText(element.description, 100);
+      });
+
+      this.toDo = res.filter(
+        (assignment: { status: number }) => assignment.status === 0
+      );
+      this.inProgress = res.filter(
+        (assignment: { status: number }) => assignment.status === 1
+      );
+      this.done = res.filter(
+        (assignment: { status: number }) => assignment.status === 2
+      );
+    });
   }
+
 
   private editTask(assignment: AssignmentModel) {
     this.assignmentService.edit(assignment.id!, assignment).subscribe({
@@ -407,6 +425,7 @@ export class BoardComponent implements OnInit {
     });
   }
 
+
   private editComment(comment: CommentModel) {
     this.commentService.edit(comment.id!, comment).subscribe({
       next: () => {
@@ -436,4 +455,48 @@ export class BoardComponent implements OnInit {
       },
     });
   }
+  
+}
+
+function truncateText(text: string, length: number): string {
+  if (text.length > length) {
+      return text.substring(0, length) + "...";
+  } else {
+      return text;
+  }
+}
+
+function expDateValidators(c: FormControl) {
+  if (!c.value) {
+    return {
+      validateInput: {
+        valid: false,
+      },
+    };
+  }
+
+  const value = c.value.replace(/\//gi, '');
+
+  if (value.length === 8) {
+    const day = parseInt(value.substring(0, 2), 10);
+    const month = parseInt(value.substring(2, 4), 10);
+    const year = parseInt(value.substring(4, 8), 10);
+
+    // Create a date object
+    const date = new Date(year, month - 1, day);
+
+    // Validate the date
+    if (
+      date.getFullYear() === year &&
+      date.getMonth() === month - 1 &&
+      date.getDate() === day
+    ) {
+      return null; // Valid date
+    }
+  }
+  return {
+    validateInput: {
+      valid: false,
+    },
+  };
 }

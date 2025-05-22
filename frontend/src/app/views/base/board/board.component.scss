@@ -14,3 +14,16 @@
 .button {
     float: right;
 }
+
+.list-group {
+    position: absolute;
+    z-index: 4;
+}
+
+.list-group-item {
+    cursor: pointer;
+}
+
+.list-group-item:hover {
+    background-color: #f0f0f0;
+}

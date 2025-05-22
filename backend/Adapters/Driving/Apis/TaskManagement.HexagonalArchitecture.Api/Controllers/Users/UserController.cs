@@ -21,7 +21,7 @@ namespace TaskManagement.HexagonalArchitecture.Api.Controllers.Users
     public class UserController(IUserService userService) : ControllerBase
     {
         [HttpGet]
-        [Route("{userId}")]
+        [Route("{userId:guid}")]
         public async Task<ActionResult> GetAsync([FromRoute] Guid userId)
         {
             var result = await userService.GetAsync(userId);
@@ -59,6 +59,18 @@ namespace TaskManagement.HexagonalArchitecture.Api.Controllers.Users
                 result.Value.CreatedDate,
                 result.Value.UpdatedDate
             });
+        }
+        
+        [HttpGet]
+        [Route("autocomplete")]
+        public async Task<ActionResult> GetByUserNameAsync([FromQuery] string userName)
+        {
+            var result = await userService.GetByUserNameAsync(userName);
+
+            if (result.IsFailure)
+                return BadRequest(result.Error);
+
+            return Ok(result.Value);
         }
 
         [HttpPost]

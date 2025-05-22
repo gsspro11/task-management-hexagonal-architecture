@@ -7,7 +7,7 @@
             <strong>User</strong> <small>Tasks</small>
           </div>
           <div class="button">
-            <button color="primary" cButton class="shadow" (click)="onCreate()">+</button>
+            <button color="primary" cButton class="shadow" (click)="onCreateTask()">+</button>
           </div>
         </div>
       </c-card-header>
@@ -20,14 +20,27 @@
               </div>
               @for (item of toDo; track item; let i = $index) {
               <c-card color="primary" textColor="white" class="m-3">
-                <c-card-header>Header</c-card-header>
+                <c-card-header>
+                  <div class="title">
+                    {{ item.priorityDescription }}
+                  </div>
+                  <div class="button">
+                    <button cButton class="float-end m-1" color="light" aria-label="Delete" (click)="onDeleteTask(item.id!)">
+                      <svg cIcon name="cilTrash"></svg>
+                    </button>
+                    <button cButton class="float-end m-1" color="light" aria-label="Comments" (click)="onViewComments(item.id!)">
+                      <svg cIcon name="cilCommentSquare"></svg>
+                    </button>
+                    <button cButton class="float-end m-1" color="light" aria-label="Delete" (click)="onViewTask(item.id!)">
+                      <svg cIcon name="cilPencil"></svg>
+                    </button>
+                  </div>
+                </c-card-header>
                 <c-card-body class="bg-gradient">
                   <h5 cCardTitle>{{ item.title }}</h5>
                   <p cCardText>
-                    {{ item.description }}
+                    {{ item.truncatedDescription }}
                   </p>
-                  <button color="light" cButton class="shadow" (click)="onViewTask(item.id!)">View</button>
-                  <button color="light" cButton class="shadow" (click)="onViewComments(item.id!)">Comments</button>
                 </c-card-body>
               </c-card>
               }
@@ -40,14 +53,27 @@
               </div>
               @for (item of inProgress; track item; let i = $index) {
               <c-card color="light" textColor="dark" class="m-3">
-                <c-card-header>Header</c-card-header>
+                <c-card-header>
+                  <div class="title">
+                    {{ item.priorityDescription }}
+                  </div>
+                  <div class="button">
+                    <button cButton class="float-end m-1" color="light" aria-label="Delete" (click)="onDeleteTask(item.id!)">
+                      <svg cIcon name="cilTrash"></svg>
+                    </button>
+                    <button cButton class="float-end m-1" color="light" aria-label="Comments" (click)="onViewComments(item.id!)">
+                      <svg cIcon name="cilCommentSquare"></svg>
+                    </button>
+                    <button cButton class="float-end m-1" color="light" aria-label="Delete" (click)="onViewTask(item.id!)">
+                      <svg cIcon name="cilPencil"></svg>
+                    </button>
+                  </div>
+                </c-card-header>
                 <c-card-body class="bg-gradient">
                   <h5 cCardTitle>{{ item.title }}</h5>
                   <p cCardText>
-                    {{ item.description }}
+                    {{ item.truncatedDescription }}
                   </p>
-                  <button color="light" cButton class="shadow" (click)="onViewTask(item.id!)">View</button>
-                  <button color="light" cButton class="shadow" (click)="onViewComments(item.id!)">Comments</button>
                 </c-card-body>
               </c-card>
               }
@@ -60,14 +86,27 @@
               </div>
               @for (item of done; track item; let i = $index) {
               <c-card color="success" textColor="white" class="m-3">
-                <c-card-header>Header</c-card-header>
+                <c-card-header>
+                  <div class="title">
+                    {{ item.priorityDescription }}
+                  </div>
+                  <div class="button">
+                    <button cButton class="float-end m-1" color="light" aria-label="Delete" (click)="onDeleteTask(item.id!)">
+                      <svg cIcon name="cilTrash"></svg>
+                    </button>
+                    <button cButton class="float-end m-1" color="light" aria-label="Comments" (click)="onViewComments(item.id!)">
+                      <svg cIcon name="cilCommentSquare"></svg>
+                    </button>
+                    <button cButton class="float-end m-1" color="light" aria-label="Delete" (click)="onViewTask(item.id!)">
+                      <svg cIcon name="cilPencil"></svg>
+                    </button>
+                  </div>
+                </c-card-header>
                 <c-card-body class="bg-gradient">
                   <h5 cCardTitle>{{ item.title }}</h5>
                   <p cCardText>
-                    {{ item.description }}
+                    {{ item.truncatedDescription }}
                   </p>
-                  <button color="light" cButton class="shadow" (click)="onViewTask(item.id!)">View</button>
-                  <button color="light" cButton class="shadow" (click)="onViewComments(item.id!)">Comments</button>
                 </c-card-body>
               </c-card>
               }
@@ -117,13 +156,20 @@
                       ? false
                       : undefined
                   " autocomplete="off" cFormControl formControlName="email" id="email" class="form-control"
-              placeholder="User" required />
+              placeholder="User" required (input)="onInputChange()" />
             <c-form-feedback *ngIf="submitted || ctrl.invalid" [valid]="!(submitted || ctrl.invalid)">
               <ng-container *ngIf="ctrl.errors as errors">
                 <div *ngIf="errors['required']">{{ formErrors['email'].required }}</div>
               </ng-container>
             </c-form-feedback>
           </c-input-group>
+          <ul *ngIf="userNameFilteredOptions.length > 0" class="list-group">
+            @for (option of userNameFilteredOptions; track option; let i = $index) {
+            <li class="list-group-item" (click)="selectOption(option)">
+              {{ option }}
+            </li>
+            }
+          </ul>
         </div>
         <div class="mb-3">
           <label cLabel for="description" class="form-label"><strong>Description</strong></label>
@@ -217,8 +263,8 @@
 <c-modal #modalComments alignment="center" id="modalComments" [(visible)]="isModalCommentsVisible"
   (close)="onCloseModalComments()" size="lg" scrollable>
   <div style="overflow-y: auto;">
-    <form #customStylesForm="ngForm" (ngSubmit)="onSubmitComment()" [formGroup]="simpleFormComment" [gutter]="3" novalidate
-      cForm>
+    <form #customStylesForm="ngForm" (ngSubmit)="onSubmitComment()" [formGroup]="simpleFormComment" [gutter]="3"
+      novalidate cForm>
       <c-modal-header>
         <h5 cModalTitle class="text-black">Discussion</h5>
         <button [cModalToggle]="modalComments.id" cButtonClose (click)="onCloseModalComments()"></button>
@@ -260,6 +306,27 @@
         <button cButton type="submit" color="primary">Save</button>
         <button cButton [cModalToggle]="modalComments.id" color="secondary"
           (click)="onCloseModalComments()">Close</button>
+      </c-modal-footer>
+    </form>
+  </div>
+</c-modal>
+
+<c-modal #modalConfirm alignment="center" id="modalConfirm" [(visible)]="isModalConfirmVisible"
+  (close)="onCloseModalConfirm()" scrollable>
+  <div style="overflow-y: auto;">
+    <form #customStylesForm="ngForm" (ngSubmit)="onConfirmDeleteTask()" [formGroup]="simpleFormComment" [gutter]="3"
+      novalidate cForm>
+      <c-modal-header>
+        <h5 cModalTitle class="text-black">Confirm?</h5>
+        <button [cModalToggle]="modalConfirm.id" cButtonClose (click)="onCloseModalConfirm()"></button>
+      </c-modal-header>
+      <c-modal-body class="text-black">
+        Do you confirm the deletion of this task?
+      </c-modal-body>
+      <c-modal-footer>
+        <button cButton type="submit" color="primary">Confirm</button>
+        <button cButton [cModalToggle]="modalConfirm.id" color="secondary"
+          (click)="onCloseModalConfirm()">Cancel</button>
       </c-modal-footer>
     </form>
   </div>

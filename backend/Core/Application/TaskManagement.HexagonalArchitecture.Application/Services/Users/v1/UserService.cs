@@ -46,6 +46,18 @@ namespace TaskManagement.HexagonalArchitecture.Application.Services.Users.v1
             return CustomResult<User>.Success(user);
         }
 
+        public async Task<CustomResult<List<string>>> GetByUserNameAsync(string userName)
+        {
+            var users = userManager.Users;
+
+            var filteredUsers = users
+                .Where(u => u.UserName.ToLower().Contains(userName.ToLower()))
+                .Select(x => x.UserName)
+                .ToList();
+
+            return await Task.FromResult(CustomResult<List<string>>.Success(filteredUsers));
+        }
+
         public async Task<CustomResult<string>> LoginAsync(string email, string password)
         {
             var resultGet = await GetByEmailAsync(email);

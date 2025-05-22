@@ -11,6 +11,10 @@ export class UserService {
     return this.httpClient.get<any>(`${this.endpoint}/${id}`);
   }
 
+  getByUserName(userName: string): Observable<any> {
+    return this.httpClient.get<any>(`${this.endpoint}/autocomplete?userName=${userName}`);
+  }
+
   login(username: string, password: string): Observable<any> {
     return this.httpClient.post<any>(`${this.endpoint}/login`, {
       username,

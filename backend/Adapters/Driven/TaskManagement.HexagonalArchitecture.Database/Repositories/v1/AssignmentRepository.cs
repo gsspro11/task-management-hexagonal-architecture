@@ -23,11 +23,17 @@ public class AssignmentRepository(ApplicationDbContext dbContext) : IAssignmentR
 
     public Task<Assignment?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        return dbContext.Set<Assignment>().FirstOrDefaultAsync(g => g.Id.Equals(id), cancellationToken);
+        return dbContext.Set<Assignment>()
+            .Where(g => g.Id.Equals(id))
+            .AsNoTracking()
+            .FirstOrDefaultAsync(cancellationToken);
     }
 
     public Task<List<Assignment>> ListByUserIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        return dbContext.Set<Assignment>().Where(g => g.UserId.Equals(id)).ToListAsync(cancellationToken);
+        return dbContext.Set<Assignment>()
+            .Where(g => g.UserId.Equals(id))
+            .AsNoTracking()
+            .ToListAsync(cancellationToken);
     }
 }

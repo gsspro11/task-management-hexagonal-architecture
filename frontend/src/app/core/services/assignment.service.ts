@@ -15,6 +15,10 @@ export class AssignmentService {
     return this.httpClient.put<any>(`${this.endpoint}?id=${id}`, assignment);
   }
 
+  delete(id: string): Observable<any> {
+    return this.httpClient.delete<any>(`${this.endpoint}?id=${id}`);
+  }
+
   register(assignment: any): Observable<any> {
     return this.httpClient.post<any>(`${this.endpoint}`, assignment);
   }
