@@ -7,7 +7,7 @@
             <strong>User</strong> <small>Tasks</small>
           </div>
           <div class="button">
-            <button color="primary" cButton class="shadow" (click)="onCreateTask()">+</button>
+            <button color="success" cButton class="shadow text-white" (click)="onCreateTask()">+</button>
           </div>
         </div>
       </c-card-header>
@@ -19,19 +19,19 @@
                 <strong>To Do</strong>
               </div>
               @for (item of toDo; track item; let i = $index) {
-              <c-card color="primary" textColor="white" class="m-3">
+              <c-card color="primary" textColor="white" class="m-3 shadow">
                 <c-card-header>
                   <div class="title">
                     {{ item.priorityDescription }}
                   </div>
                   <div class="button">
-                    <button cButton class="float-end m-1" color="light" aria-label="Delete" (click)="onDeleteTask(item.id!)">
+                    <button cButton class="float-end m-1" color="primary" aria-label="Delete" (click)="onDeleteTask(item.id!)">
                       <svg cIcon name="cilTrash"></svg>
                     </button>
-                    <button cButton class="float-end m-1" color="light" aria-label="Comments" (click)="onViewComments(item.id!)">
+                    <button cButton class="float-end m-1" color="primary" aria-label="Comments" (click)="onViewComments(item.id!)">
                       <svg cIcon name="cilCommentSquare"></svg>
                     </button>
-                    <button cButton class="float-end m-1" color="light" aria-label="Delete" (click)="onViewTask(item.id!)">
+                    <button cButton class="float-end m-1" color="primary" aria-label="Delete" (click)="onViewTask(item.id!)">
                       <svg cIcon name="cilPencil"></svg>
                     </button>
                   </div>
@@ -52,7 +52,7 @@
                 <strong>In Progress</strong>
               </div>
               @for (item of inProgress; track item; let i = $index) {
-              <c-card color="light" textColor="dark" class="m-3">
+              <c-card color="light" textColor="dark" class="m-3 shadow">
                 <c-card-header>
                   <div class="title">
                     {{ item.priorityDescription }}
@@ -85,19 +85,19 @@
                 <strong>Done</strong>
               </div>
               @for (item of done; track item; let i = $index) {
-              <c-card color="success" textColor="white" class="m-3">
+              <c-card color="success" textColor="white" class="m-3 shadow">
                 <c-card-header>
                   <div class="title">
                     {{ item.priorityDescription }}
                   </div>
                   <div class="button">
-                    <button cButton class="float-end m-1" color="light" aria-label="Delete" (click)="onDeleteTask(item.id!)">
+                    <button cButton class="float-end m-1 text-white" color="success" aria-label="Delete" (click)="onDeleteTask(item.id!)">
                       <svg cIcon name="cilTrash"></svg>
                     </button>
-                    <button cButton class="float-end m-1" color="light" aria-label="Comments" (click)="onViewComments(item.id!)">
+                    <button cButton class="float-end m-1 text-white" color="success" aria-label="Comments" (click)="onViewComments(item.id!)">
                       <svg cIcon name="cilCommentSquare"></svg>
                     </button>
-                    <button cButton class="float-end m-1" color="light" aria-label="Delete" (click)="onViewTask(item.id!)">
+                    <button cButton class="float-end m-1 text-white" color="success" aria-label="Delete" (click)="onViewTask(item.id!)">
                       <svg cIcon name="cilPencil"></svg>
                     </button>
                   </div>

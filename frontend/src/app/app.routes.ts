@@ -17,12 +17,12 @@ export const routes: Routes = [
     },
     children: [
       {
-        path: 'theme',
-        loadChildren: () => import('./views/theme/routes').then((m) => m.routes)
+        path: 'board',
+        loadChildren: () => import('./views/board/routes').then((m) => m.routes)
       },
       {
-        path: 'base',
-        loadChildren: () => import('./views/base/routes').then((m) => m.routes)
+        path: 'theme',
+        loadChildren: () => import('./views/theme/routes').then((m) => m.routes)
       },
       {
         path: 'pages',

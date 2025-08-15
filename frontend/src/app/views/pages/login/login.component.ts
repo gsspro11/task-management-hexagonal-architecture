@@ -77,7 +77,7 @@ export class LoginComponent {
     private formBuilder: FormBuilder,
     public validationFormsService: ValidationFormsService
   ) {
-    if (this.authService.currentUserValue) this.router.navigate(['/base/board']);
+    if (this.authService.currentUserValue) this.router.navigate(['/board']);
 
     this.formErrors = this.validationFormsService.errorMessages;
     this.createForm();
@@ -110,7 +110,7 @@ export class LoginComponent {
             this.tokenService.store = e;
           this.authService.setAuthFromLocalStorage(e);
           this.authService.getUserByToken();
-          this.router.navigate(['/base/board']);
+          this.router.navigate(['/board']);
         },
         error: (e) => (this.messageError = e.message),
       });

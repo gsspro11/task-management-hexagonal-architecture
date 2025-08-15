@@ -28,9 +28,9 @@ import {
   ToastHeaderComponent,
 } from '@coreui/angular';
 import { IconDirective } from '@coreui/icons-angular';
-import { AssignmentService } from '../../../core/services/assignment.service';
-import { TokenService } from '../../../core/services/token.service';
-import { TokenModel } from '../../../auth/models/token.model';
+import { AssignmentService } from '../../core/services/assignment.service';
+import { TokenService } from '../../core/services/token.service';
+import { TokenModel } from '../../auth/models/token.model';
 import { NgIf } from '@angular/common';
 import {
   FormBuilder,
@@ -42,11 +42,11 @@ import {
 } from '@angular/forms';
 import { NgxMaskDirective } from 'ngx-mask';
 import { format } from 'date-fns';
-import { ValidationFormsService } from '../../pages/validation-forms.service';
-import { CommentService } from '../../../core/services/comment.service';
-import { UserService } from '../../../core/services/user.service';
-import { AssignmentModel } from '../../../core/models/assignment-model';
-import { CommentModel } from '../../../core/models/comment-model';
+import { ValidationFormsService } from '../pages/validation-forms.service';
+import { CommentService } from '../../core/services/comment.service';
+import { UserService } from '../../core/services/user.service';
+import { AssignmentModel } from '../../core/models/assignment-model';
+import { CommentModel } from '../../core/models/comment-model';
 
 @Component({
   selector: 'app-board',

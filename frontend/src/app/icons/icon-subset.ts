@@ -290,7 +290,6 @@ export enum IconSubset {
   cilTags = 'cilTags',
   cilTask = 'cilTask',
   cilTrash = 'cilTrash',
-  cilEye = 'cilEye',
   cilUnderline = 'cilUnderline',
   cilUser = 'cilUser',
   cilUserFemale = 'cilUserFemale',

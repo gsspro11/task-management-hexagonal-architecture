@@ -3,7 +3,7 @@ import { INavData } from '@coreui/angular';
 export const navItems: INavData[] = [
   {
     name: 'Board',
-    url: '/base/board',
+    url: '/board',
     iconComponent: { name: 'cil-speedometer' },
     badge: {
       color: 'info',
@@ -40,16 +40,5 @@ export const navItems: INavData[] = [
         icon: 'nav-icon-bullet',
       },
     ],
-  },
-  {
-    title: true,
-    name: 'Links',
-    class: 'mt-auto',
-  },
-  {
-    name: 'Docs',
-    url: 'https://coreui.io/angular/docs/',
-    iconComponent: { name: 'cil-description' },
-    attributes: { target: '_blank' },
-  },
+  }
 ];
