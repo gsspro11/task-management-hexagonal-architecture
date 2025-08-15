@@ -7,16 +7,14 @@ namespace TaskManagement.HexagonalArchitecture.Api.Common.ExtensionMethods.v1
 {
     public static class AuthorizationExtensions
     {
-        public static void AddAuthorization(this IServiceCollection services, IConfiguration configuration)
+        public static void AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy(JwtBearerDefaults.AuthenticationScheme, policy =>
+            services.AddAuthorizationBuilder()
+                .AddPolicy(JwtBearerDefaults.AuthenticationScheme, policy =>
                 {
                     policy.RequireAuthenticatedUser();
                     policy.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme); // Ensure you have the correct scheme
                 });
-            });
 
             services.AddAuthentication(options =>
             {
@@ -26,14 +24,20 @@ namespace TaskManagement.HexagonalArchitecture.Api.Common.ExtensionMethods.v1
             })
                 .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, o =>
                 {
-                    o.RequireHttpsMetadata = false;
+                    o.RequireHttpsMetadata = true;
+                    o.SaveToken = true;
                     o.TokenValidationParameters = new TokenValidationParameters
                     {
                         IssuerSigningKey =
                             new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Secret"]!)),
                         ValidIssuer = configuration["Jwt:Issuer"],
                         ValidAudience = configuration["Jwt:Audience"],
-                        ClockSkew = TimeSpan.Zero
+                        ClockSkew = TimeSpan.Zero,
+                        // Critical: actually enforce validation
+                        ValidateIssuerSigningKey = true,
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true
                     };
                 });
 

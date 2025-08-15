@@ -23,7 +23,10 @@ namespace TaskManagement.HexagonalArchitecture.Api.Controllers.Users
         {
             RuleFor(x => x.UserName)
                 .NotEmpty()
-                .WithMessage("The field UserName is required.");
+                .WithMessage("The field UserName is required.")
+                .EmailAddress()
+                .WithMessage("The field UserName must be a valid email address.");
+
 
             RuleFor(x => x.Password)
                 .NotEmpty()
