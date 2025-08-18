@@ -21,7 +21,7 @@ namespace TaskManagement.HexagonalArchitecture.Api.Controllers.Comments
         {
             RuleFor(x => x.Id)
                 .NotEmpty()
-                .WithMessage("The field AssignmentId is required.");
+                .WithMessage("The field Id is required.");
             
             RuleFor(x => x.Description)
                 .Length(1, 20000)
