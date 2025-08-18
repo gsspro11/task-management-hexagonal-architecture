@@ -25,8 +25,6 @@ namespace TaskManagement.HexagonalArchitecture.Api.Test.Controllers.Users
         {
             // Arrange
             var id = Guid.NewGuid();
-            var now = DateTime.UtcNow;
-
             var user = new User("John", "Doe", "john.doe@example.com");
 
             _userServiceMock
