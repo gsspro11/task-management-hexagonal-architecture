@@ -41,7 +41,7 @@ namespace TaskManagement.HexagonalArchitecture.Api.Common.ExtensionMethods.v1
                     };
                 });
 
-            services.AddSingleton<TokenProvider>();
+            services.AddScoped<TokenProvider>();
         }
     }
 }

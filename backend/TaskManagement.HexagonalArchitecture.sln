@@ -44,6 +44,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apis", "Apis", "{DBB53A40-A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskManagement.HexagonalArchitecture.Api", "Adapters\Driving\Apis\TaskManagement.HexagonalArchitecture.Api\TaskManagement.HexagonalArchitecture.Api.csproj", "{64FE58DD-1E6F-4F85-AB62-063D1789FFC1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Driving", "Driving", "{6114D64F-996B-4042-8194-E576AF6846A8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apis", "Apis", "{512FCF2C-13A3-48A7-9F10-E7516169F9ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManagement.HexagonalArchitecture.Api.Test", "TaskManagement.HexagonalArchitecture.Api.Test\TaskManagement.HexagonalArchitecture.Api.Test.csproj", "{A50FF252-6968-4E3F-9D51-1DC488553E49}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -74,6 +80,10 @@ Global
 		{64FE58DD-1E6F-4F85-AB62-063D1789FFC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64FE58DD-1E6F-4F85-AB62-063D1789FFC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64FE58DD-1E6F-4F85-AB62-063D1789FFC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A50FF252-6968-4E3F-9D51-1DC488553E49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A50FF252-6968-4E3F-9D51-1DC488553E49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A50FF252-6968-4E3F-9D51-1DC488553E49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A50FF252-6968-4E3F-9D51-1DC488553E49}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -94,6 +104,9 @@ Global
 		{CBAD07FF-C745-4422-8736-DA16EA9998C4} = {093FDEB2-B293-40D3-8445-504070319058}
 		{DBB53A40-A53A-43BD-B81E-07A6AB8B1DE1} = {CAFF5ACA-9CFF-44B1-BFE5-410A70A730D8}
 		{64FE58DD-1E6F-4F85-AB62-063D1789FFC1} = {DBB53A40-A53A-43BD-B81E-07A6AB8B1DE1}
+		{6114D64F-996B-4042-8194-E576AF6846A8} = {2F308AF8-E474-4B42-8BBE-2C37F68421E7}
+		{512FCF2C-13A3-48A7-9F10-E7516169F9ED} = {6114D64F-996B-4042-8194-E576AF6846A8}
+		{A50FF252-6968-4E3F-9D51-1DC488553E49} = {512FCF2C-13A3-48A7-9F10-E7516169F9ED}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C2EAE5E3-E648-4C57-A8D6-1E89AAA1B0B6}

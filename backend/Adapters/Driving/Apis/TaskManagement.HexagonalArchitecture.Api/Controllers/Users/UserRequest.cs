@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using Swashbuckle.AspNetCore.Annotations;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using TaskManagement.HexagonalArchitecture.Api.Attributes;
 
 namespace TaskManagement.HexagonalArchitecture.Api.Controllers.Users

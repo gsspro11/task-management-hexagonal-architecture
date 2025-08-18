@@ -7,29 +7,29 @@ namespace TaskManagement.HexagonalArchitecture.Database;
 public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
     : IdentityDbContext<User, Role, Guid>(options)
 {
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    protected override void OnModelCreating(ModelBuilder builder)
     {
-        modelBuilder.Entity<User>()
+        builder.Entity<User>()
             .HasMany(e => e.Assignments)
             .WithOne(c => c.User);
 
-        modelBuilder.Entity<User>()
+        builder.Entity<User>()
             .HasMany(e => e.Comments)
             .WithOne(c => c.User);
 
-        modelBuilder.Entity<Assignment>()
+        builder.Entity<Assignment>()
             .HasOne(e => e.User)
             .WithMany(c => c.Assignments);
         
-        modelBuilder.Entity<Comment>()
+        builder.Entity<Comment>()
             .HasOne(e => e.User)
             .WithMany(c => c.Comments);
         
-        modelBuilder.Entity<Comment>()
+        builder.Entity<Comment>()
             .HasOne(e => e.Assignment)
             .WithMany(c => c.Comments)
             .OnDelete(DeleteBehavior.NoAction);
         
-        base.OnModelCreating(modelBuilder);
+        base.OnModelCreating(builder);
     }
 }
