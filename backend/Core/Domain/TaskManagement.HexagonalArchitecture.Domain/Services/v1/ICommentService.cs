@@ -9,7 +9,6 @@ namespace TaskManagement.HexagonalArchitecture.Domain.Services.v1
 
         Task<CustomResult<Comment>> DeleteAsync(Guid id, CancellationToken cancellationToken);
 
-        Task<CustomResult<List<Comment>>> ListByUserIdAsync(Guid id, CancellationToken cancellationToken);
         Task<CustomResult<List<Comment>>> ListByAssignmentIdAsync(Guid id, CancellationToken cancellationToken);
 
         Task<CustomResult<Comment>> UpdateAsync(Guid id, string description, CancellationToken cancellationToken);
