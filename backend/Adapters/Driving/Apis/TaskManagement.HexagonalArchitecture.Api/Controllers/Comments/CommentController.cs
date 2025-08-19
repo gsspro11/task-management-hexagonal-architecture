@@ -8,7 +8,7 @@ using TaskManagement.HexagonalArchitecture.Domain.Services.v1;
 namespace TaskManagement.HexagonalArchitecture.Api.Controllers.Comments
 {
     /// <summary>
-    /// Users Management
+    /// Comments Management
     /// </summary>
     /// <response code="400">Field validation messages</response>
     /// <response code="422">Business messages</response>

@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskManagement.HexagonalArchitecture.Domain.Abstractions;
@@ -8,7 +7,7 @@ using TaskManagement.HexagonalArchitecture.Domain.Services.v1;
 namespace TaskManagement.HexagonalArchitecture.Api.Controllers.Assignments
 {
     /// <summary>
-    /// Users Management
+    /// Assignments Management
     /// </summary>
     /// <response code="400">Field validation messages</response>
     /// <response code="422">Business messages</response>
@@ -22,11 +21,8 @@ namespace TaskManagement.HexagonalArchitecture.Api.Controllers.Assignments
     [ProducesResponseType(typeof(IEnumerable<CustomError>), StatusCodes.Status500InternalServerError)]
     [ProducesResponseType(typeof(IEnumerable<CustomError>), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(IEnumerable<CustomError>), StatusCodes.Status422UnprocessableEntity)]
-    public class AssignmentController(IHttpContextAccessor httpContextAccessor, IAssignmentService assignmentService) : ControllerBase
+    public class AssignmentController(IAssignmentService assignmentService) : ControllerBase
     {
-        private readonly Guid _userId =
-            Guid.Parse(httpContextAccessor.HttpContext!.User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-        
         [HttpGet]
         [Route("{assignmentId:guid}")]
         public async Task<ActionResult> GetAsync([FromRoute] Guid assignmentId, CancellationToken cancellationToken)
