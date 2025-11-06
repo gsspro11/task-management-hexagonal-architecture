@@ -33,14 +33,7 @@ public class CustomResult<T>
     public bool IsFailure => !IsSuccess;
     public T Value
     {
-        get
-        {
-            if (IsFailure)
-            {
-                throw new InvalidOperationException("There is no value for failure");
-            }
-            return _value!;
-        }
+        get => IsFailure ? throw new InvalidOperationException("There is no value for failure") : _value!;
         private init => _value = value;
     }
     public CustomError? Error { get; }
