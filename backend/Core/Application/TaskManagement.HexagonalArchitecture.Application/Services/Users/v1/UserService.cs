@@ -51,7 +51,7 @@ namespace TaskManagement.HexagonalArchitecture.Application.Services.Users.v1
             var users = userManager.Users;
 
             var filteredUsers = users
-                .Where(u => u.UserName.Contains(userName, StringComparison.CurrentCultureIgnoreCase))
+                .Where(u => u.UserName.ToLower().Contains(userName.ToLower()))
                 .Select(x => x.UserName)
                 .ToList();
 
