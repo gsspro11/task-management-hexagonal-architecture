@@ -15,22 +15,22 @@ namespace TaskManagement.HexagonalArchitecture.Api.Controllers.Users
     [Produces("application/json")]
     [Route("api/v1/user")]
     [ProducesResponseType(StatusCodes.Status501NotImplemented)]
-    [ProducesResponseType(typeof(IEnumerable<CustomError>), StatusCodes.Status500InternalServerError)]
     [ProducesResponseType(typeof(IEnumerable<CustomError>), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(IEnumerable<CustomError>), StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(typeof(IEnumerable<CustomError>), StatusCodes.Status500InternalServerError)]
     public class UserController(IUserService userService) : ControllerBase
     {
         [HttpGet]
         [Route("{userId:guid}")]
-        public async Task<ActionResult> GetAsync([FromRoute] Guid userId)
+        [ProducesResponseType(typeof(UserResponse), StatusCodes.Status200OK)]
+        public async Task<ActionResult<UserResponse>> GetAsync([FromRoute] Guid userId)
         {
             var result = await userService.GetAsync(userId);
 
             if (result.IsFailure)
                 return BadRequest(result.Error);
 
-            return Ok(new
-            {
+            return Ok(new UserResponse(
                 result.Value.Id,
                 result.Value.FirstName,
                 result.Value.LastName,
@@ -38,19 +38,19 @@ namespace TaskManagement.HexagonalArchitecture.Api.Controllers.Users
                 result.Value.UserName,
                 result.Value.CreatedDate,
                 result.Value.UpdatedDate
-            });
+            ));
         }
-        
+
         [HttpGet]
-        public async Task<ActionResult> GetByEmailAsync([FromQuery] string email)
+        [ProducesResponseType(typeof(UserResponse), StatusCodes.Status200OK)]
+        public async Task<ActionResult<UserResponse>> GetByEmailAsync([FromQuery] string email)
         {
             var result = await userService.GetByEmailAsync(email);
 
             if (result.IsFailure)
                 return BadRequest(result.Error);
 
-            return Ok(new
-            {
+            return Ok(new UserResponse(
                 result.Value.Id,
                 result.Value.FirstName,
                 result.Value.LastName,
@@ -58,12 +58,13 @@ namespace TaskManagement.HexagonalArchitecture.Api.Controllers.Users
                 result.Value.UserName,
                 result.Value.CreatedDate,
                 result.Value.UpdatedDate
-            });
+            ));
         }
-        
+
         [HttpGet]
         [Route("autocomplete")]
-        public async Task<ActionResult> GetByUserNameAsync([FromQuery] string userName)
+        [ProducesResponseType(typeof(IEnumerable<string>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<string>>> GetByUserNameAsync([FromQuery] string userName)
         {
             var result = await userService.GetByUserNameAsync(userName);
 
@@ -74,9 +75,11 @@ namespace TaskManagement.HexagonalArchitecture.Api.Controllers.Users
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateAsync(UserRequest request)
+        [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
+        public async Task<ActionResult<Guid>> CreateAsync(UserRequest request)
         {
-            var result = await userService.CreateAsync(request.FirstName, request.LastName, request.Email, request.Password);
+            var result =
+                await userService.CreateAsync(request.FirstName, request.LastName, request.Email, request.Password);
 
             if (result.IsFailure)
                 return BadRequest(result.Errors);
@@ -85,7 +88,8 @@ namespace TaskManagement.HexagonalArchitecture.Api.Controllers.Users
         }
 
         [HttpPut]
-        public async Task<ActionResult> UpdateAsync(Guid userId, [FromBody] UserRequest request)
+        [ProducesResponseType(typeof(Guid), StatusCodes.Status200OK)]
+        public async Task<ActionResult<Guid>> UpdateAsync(Guid userId, [FromBody] UserRequest request)
         {
             var result = await userService.UpdateAsync(userId, request.FirstName, request.LastName, request.Email);
 
@@ -94,9 +98,10 @@ namespace TaskManagement.HexagonalArchitecture.Api.Controllers.Users
 
             return Ok(result.Value.Id);
         }
-        
+
         [HttpDelete]
-        public async Task<ActionResult> DeleteAsync(string email)
+        [ProducesResponseType(typeof(Guid), StatusCodes.Status200OK)]
+        public async Task<ActionResult<Guid>> DeleteAsync(string email)
         {
             var result = await userService.DeleteAsync(email);
 
@@ -108,7 +113,8 @@ namespace TaskManagement.HexagonalArchitecture.Api.Controllers.Users
 
         [HttpPost]
         [Route("login")]
-        public async Task<ActionResult> LoginAsync(LoginRequest request)
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        public async Task<ActionResult<string>> LoginAsync(LoginRequest request)
         {
             var result = await userService.LoginAsync(request.UserName, request.Password);
 
